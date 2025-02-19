@@ -25,16 +25,24 @@ def get_balance(address: str):
 
 def main():
     result = {}
+    non_zero = 0
     with open('wallets.txt') as f:
         wallets = f.readlines()
 
     for wallet in wallets:
         address, balance = get_balance(wallet)
         result[address] = balance
-        time.sleep(1)
+        time.sleep(.5)
         print(f"Address: {address}, balance {balance} MON")
+        if balance != 0:
+            non_zero += 1
 
-    print('\n\n\n', result)
+    print(f'\n\n\n')
+    print(f"Found total {non_zero} non zero balances on wallets:")
+    for address, balance in result.items():
+        if balance != 0:
+            print(f"Address: {address}, balance {balance} MON")
+
 
 if __name__ == '__main__':
     main()
